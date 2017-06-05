@@ -32,6 +32,8 @@
 
 1. Goto to the 10th line in a file (using both Ex commands and Normal mode).
 2. Change `pick` to `squash` in 10 lines of a rebase descriptor using the substitue Ex command and the appropriate range.
+3. Jump to a character on a line. Jump to the next matching char. (Hint: page 7).
+4. Add to a number on a line. (Hint: page 20).
 
 # xargs
 
