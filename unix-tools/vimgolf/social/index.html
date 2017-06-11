@@ -4,6 +4,9 @@
 		<title>Vimgolf Together</title>
 		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
 		<link href="style.css" rel="stylesheet" type="text/css">
+		<meta charset="UTF-8">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.10/handlebars.min.js" type="text/javascript"></script> 
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 	</head>
 	<body>
 		<div class="main_panel">
@@ -16,29 +19,27 @@
 			</div>
 			<div class="high_scores_panel">
 				<h2>Solutions:</h2>
-				<div class="high_score_item">
-					<div class="high_score_item_submission">
-						<div><code>ddwqZZ</code></div>
-						<div class="high_score_author">by Robert</div>
-					</div>
-					<div class="high_score_score">11</div>
-				</div>
-				<div class="high_score_item">
-					<div class="high_score_item_submission">
-						<div><code>ddwqZZ</code></div>
-						<div class="high_score_author">by Robert</div>
-					</div>
-					<div class="high_score_score">11</div>
-				</div>
-				<div class="high_score_item">
-					<div class="high_score_item_submission">
-						<div><code>ddwqZZ</code></div>
-						<div class="high_score_author">by Robert</div>
-					</div>
-					<div class="high_score_score">11</div>
-				</div>
+				<div id="solutions-content-placeholder"/>
 			</div>
 		</div>
 	</body>
 </html>
+<script id="solutions-template" type="text/x-handlebars-template">
+	{{#each solutions}}
+	<div class="high_score_item">
+		<div class="high_score_item_submission">
+			<div><code>{{submission}}</code></div>
+			<div class="high_score_author">by {{author}}</div>
+		</div>
+		<div class="high_score_score">{{score}}</div>
+	</div>
+	{{/each}}
+</script>
+<script>
+	var source = $("#solutions-template").html();
+	var template = Handlebars.compile(source);
 
+	var data = { solutions: [{submission: "abc123", author: "Mikey", score: 99}] };
+	var result = template(data);
+	$("#solutions-content-placeholder").html(result);
+</script>
