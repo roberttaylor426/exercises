@@ -1,0 +1,55 @@
+* {
+	border-color: #795548;
+	font-family: 'Roboto', sans-serif;
+	padding: 10px; 
+}
+
+.main_panel {
+	display: flex;
+}
+
+.instructions_panel {
+	border-style: none dashed none none;
+	border-width: 1px;
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+}
+
+.high_scores_panel {
+	display: flex;
+	flex-grow: 1;
+	flex-direction: column;
+	padding-left: 30px;
+}
+
+.high_score_item {
+	align-items: center;
+	background-color: #D7CCC8;
+	display: flex;
+	margin-bottom: 10px;
+	padding-right: 20px;
+}
+
+.high_score_item_submission {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
+
+.high_score_author {
+	font-size: 0.75em;
+}
+
+.high_score_score {
+	background: #8BC34A;
+	font-size: 2em;
+}
+
+code {
+	background: #eee;
+	border-style: dashed;
+	border-width: 1px;
+	display: block;
+	font-family: monospace;
+}
