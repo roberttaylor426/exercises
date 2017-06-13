@@ -39,7 +39,10 @@
 	var source = $("#solutions-template").html();
 	var template = Handlebars.compile(source);
 
-	var data = { solutions: [{submission: "abc123", author: "Mikey", score: 99}] };
+	var data = { solutions: [
+					{ submission: "abc123", author: "Mikey", score: 99 },
+					{ submission: "dd123ZZ", author: "Claudy", score: 6 }
+				] };
 	var result = template(data);
 	$("#solutions-content-placeholder").html(result);
 </script>
