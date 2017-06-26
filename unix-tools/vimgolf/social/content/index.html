@@ -19,30 +19,19 @@
 			</div>
 			<div class="high_scores_panel">
 				<h2>Solutions:</h2>
-				<div id="solutions-content-placeholder"/>
+				<div id="solutions-content-placeholder"></div>
 			</div>
 		</div>
 	</body>
 </html>
-<script id="solutions-template" type="text/x-handlebars-template">
-	{{#each solutions}}
-	<div class="high_score_item">
-		<div class="high_score_item_submission">
-			<div><code>{{submission}}</code></div>
-			<div class="high_score_author">by {{author}}</div>
-		</div>
-		<div class="high_score_score">{{score}}</div>
-	</div>
-	{{/each}}
-</script>
 <script>
-	var source = $("#solutions-template").html();
-	var template = Handlebars.compile(source);
-
-	var data = { solutions: [
-					{ submission: "abc123", author: "Mikey", score: 99 },
-					{ submission: "dd123ZZ", author: "Claudy", score: 6 }
-				] };
-	var result = template(data);
-	$("#solutions-content-placeholder").html(result);
+	$.get('solutions-template.hbs', function (source) {
+		var template = Handlebars.compile(source);
+		var data = { solutions: [
+						{ submission: "abc123", author: "Mikey", score: 99 },
+						{ submission: "dd123ZZ", author: "Claudy", score: 6 }
+					] };
+		var result = template(data);
+		$("#solutions-content-placeholder").html(result);
+	}, 'html')
 </script>

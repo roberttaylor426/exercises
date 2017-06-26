@@ -9,6 +9,7 @@
   "author": "Robert Taylor",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "hbs": "^4.0.1"
   }
 }
