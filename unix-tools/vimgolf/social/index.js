@@ -42,7 +42,7 @@ app.post('/exercises/:exerciseName/authors/:author/submissions', function (req, 
 })
 
 function calculateScore(solution) {
-	return solution.length
+	return solution.replace(new RegExp("<.+>"),"x").length
 }
 
 // Implement delete a post endpoint
