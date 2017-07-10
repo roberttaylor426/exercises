@@ -29,12 +29,11 @@
 	console.log('ws://' + window.location.host + window.location.pathname + '/submissions');
 	websocket.onmessage = function(event) {
 		console.log(event.data);
-		renderSolutions(event.data);
+		renderSolutions(JSON.parse(event.data));
 	}
 	function renderSolutions(data) {
 		$.get('/solutions-template.hbs', function (source) {
 			var template = Handlebars.compile(source);
-console.log('Applying template with data: ' + data);
 			var result = template(data);
 			$("#solutions-content-placeholder").html(result);
 		}, 'html');
