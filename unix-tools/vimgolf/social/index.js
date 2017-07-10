@@ -34,17 +34,14 @@ app.get('/exercises/:exerciseName', function (req, res) {
 	});
 });
 
-//WHY IS THE CONNECTION NEVER REPORTING AS OPEN? IS IT ALREADY OPEN?
 app.ws('/exercises/:exerciseName/submissions', function(ws, req) {
 	var exerciseName = req.params.exerciseName;
 	console.log('registering ws connection for ' + exerciseName);
-//	ws.on('open', function() {
-		console.log('connection open!');
-		if (!(exerciseName in exerciseWsConnections)) {
-			exerciseWsConnections[exerciseName] = new Array();
-		}
-		exerciseWsConnections[exerciseName].push(ws);
-//	});
+	if (!(exerciseName in exerciseWsConnections)) {
+		exerciseWsConnections[exerciseName] = new Array();
+	}
+	exerciseWsConnections[exerciseName].push(ws);
+	notifyExerciseObservers(exerciseName);
 	ws.on('close', function(code, reason) {
 		console.log('connection closed!');
 		for (var i = 0; i < exerciseWsConnections[exerciseName].length; i++) {
@@ -81,7 +78,7 @@ function notifyExerciseObservers(exerciseName) {
 	}
 	for (var i = 0; i < exerciseWsConnections[exerciseName].length; i++) {
 		console.log('Notifying observer!');
-		exerciseWsConnections[exerciseName][i].send(JSON.stringify({ solutions: exerciseSubmissions[exerciseName] }));
+		exerciseWsConnections[exerciseName][i].send(JSON.stringify({ solutions: exerciseSubmissions[exerciseName].sort(function(a, b) { return a.score - b.score })}));
 	}	
 }
 
