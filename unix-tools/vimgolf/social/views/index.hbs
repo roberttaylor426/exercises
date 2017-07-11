@@ -25,8 +25,8 @@
 	</body>
 </html>
 <script>
-	var websocket = new WebSocket('ws://' + window.location.host + window.location.pathname + '/submissions');
-	console.log('ws://' + window.location.host + window.location.pathname + '/submissions');
+	var websocket = new WebSocket('ws://' + window.location.host + window.location.pathname + '/solutions');
+	console.log('ws://' + window.location.host + window.location.pathname + '/solutions');
 	websocket.onmessage = function(event) {
 		console.log(event.data);
 		renderSolutions(JSON.parse(event.data));

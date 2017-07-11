@@ -12,7 +12,7 @@ app.set('view engine', 'hbs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var exerciseSubmissions = {};
+var exerciseSolutions = {};
 var exerciseWsConnections = {};
 
 // Make this tidier with promises
@@ -34,7 +34,7 @@ app.get('/exercises/:exerciseName', function (req, res) {
 	});
 });
 
-app.ws('/exercises/:exerciseName/submissions', function(ws, req) {
+app.ws('/exercises/:exerciseName/solutions', function(ws, req) {
 	var exerciseName = req.params.exerciseName;
 	console.log('registering ws connection for ' + exerciseName);
 	if (!(exerciseName in exerciseWsConnections)) {
@@ -57,10 +57,10 @@ app.post('/exercises/:exerciseName/authors/:author/solutions', function (req, re
 	var exerciseName = req.params.exerciseName;
 	console.log(req.body);
 	var solution = req.body.solution;
-	if (!(exerciseName in exerciseSubmissions)) {
-		exerciseSubmissions[exerciseName] = new Array();
+	if (!(exerciseName in exerciseSolutions)) {
+		exerciseSolutions[exerciseName] = new Array();
 	}
-	exerciseSubmissions[exerciseName].push({ id: exerciseSubmissions.length, author: req.params.author, solution: solution, score: calculateScore(solution) });
+	exerciseSolutions[exerciseName].push({ id: exerciseSolutions.length, author: req.params.author, solution: solution, score: calculateScore(solution) });
 	notifyExerciseObservers(exerciseName);
 	res.sendStatus(200);
 });
@@ -78,12 +78,12 @@ function notifyExerciseObservers(exerciseName) {
 	}
 	for (var i = 0; i < exerciseWsConnections[exerciseName].length; i++) {
 		console.log('Notifying observer!');
-		exerciseWsConnections[exerciseName][i].send(JSON.stringify({ solutions: exerciseSubmissions[exerciseName].sort(function(a, b) { return a.score - b.score })}));
+		exerciseWsConnections[exerciseName][i].send(JSON.stringify({ solutions: exerciseSolutions[exerciseName].sort(function(a, b) { return a.score - b.score })}));
 	}	
 }
 
 // Implement delete a post endpoint
-//app.delete('/exercises/:exerciseName/submissions/:submissionId'), function (req, res) {
+//app.delete('/exercises/:exerciseName/solutions/:solutionId'), function (req, res) {
 //}
 
 app.listen(3000);
