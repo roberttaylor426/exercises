@@ -16,6 +16,16 @@ var exerciseSolutions = {};
 var deletedSolutions = {};
 var exerciseWsConnections = {};
 
+var analogyVideos = [
+	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
+	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
+	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
+	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
+	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
+	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
+	["https://www.youtube.com/watch?v=GA2-DEEkU9M"]
+];
+
 app.get('/exercises/:exerciseName', function (req, res) {
 	var exerciseName = req.params.exerciseName
 	fs.readFile('exercises/' + exerciseName, function(err, exercise) {
@@ -52,7 +62,9 @@ app.post('/exercises/:exerciseName/authors/:author/solutions', function (req, re
 	fs.readFile('exercises/' + exerciseName, function(err, exercise) {
 		if (err) throw err;
 		var par = JSON.parse(exercise.toString()).exercise_par;
-		res.send("Par " + par);
+		var score = calculateScore(solution);
+		var videoBucket = analogyVideos[determineVideoBucket(score, par)];
+		res.send(videoBucket[Math.floor(Math.random() * videoBucket.length)]);
 	});
 });
 
