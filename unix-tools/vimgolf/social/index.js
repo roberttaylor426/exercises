@@ -13,37 +13,25 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 var exerciseSolutions = {};
+var deletedSolutions = {};
 var exerciseWsConnections = {};
 
-// Make this tidier with promises
 app.get('/exercises/:exerciseName', function (req, res) {
 	var exerciseName = req.params.exerciseName
-	fs.readFile('exercises/' + exerciseName + '_title', function(err, name) {
-		if (err) throw err
-		fs.readFile('exercises/' + exerciseName + '_start', function(err, start) {
-			if (err) throw err
-			fs.readFile('exercises/' + exerciseName + '_end', function(err, end) {
-				if (err) throw err
-				res.render('index', { 
-							exercise_name: name.toString(),
-							exercise_start: start.toString(),
-							exercise_end: end.toString() 
-				});
-			});
-		});
+	fs.readFile('exercises/' + exerciseName, function(err, exercise) {
+		if (err) throw err;
+		res.render('index', JSON.parse(exercise.toString()));
 	});
 });
 
 app.ws('/exercises/:exerciseName/solutions', function(ws, req) {
 	var exerciseName = req.params.exerciseName;
-	console.log('registering ws connection for ' + exerciseName);
 	if (!(exerciseName in exerciseWsConnections)) {
 		exerciseWsConnections[exerciseName] = new Array();
 	}
 	exerciseWsConnections[exerciseName].push(ws);
 	notifyExerciseObservers(exerciseName);
 	ws.on('close', function(code, reason) {
-		console.log('connection closed!');
 		for (var i = 0; i < exerciseWsConnections[exerciseName].length; i++) {
 			if (exerciseWsConnections[exerciseName][i] == ws) {
 				exerciseWsConnections[exerciseName].splice(i, 1);
@@ -55,37 +43,55 @@ app.ws('/exercises/:exerciseName/solutions', function(ws, req) {
 
 app.post('/exercises/:exerciseName/authors/:author/solutions', function (req, res) {
 	var exerciseName = req.params.exerciseName;
-	console.log(req.body);
 	var solution = req.body.solution;
 	if (!(exerciseName in exerciseSolutions)) {
 		exerciseSolutions[exerciseName] = new Array();
 	}
-	exerciseSolutions[exerciseName].push({ id: exerciseSolutions.length, author: req.params.author, solution: solution, score: calculateScore(solution) });
+	exerciseSolutions[exerciseName].push({ id: exerciseSolutions[exerciseName].length, author: req.params.author, solution: solution, score: calculateScore(solution) });
 	notifyExerciseObservers(exerciseName);
-	res.sendStatus(200);
+	fs.readFile('exercises/' + exerciseName, function(err, exercise) {
+		if (err) throw err;
+		var par = JSON.parse(exercise.toString()).exercise_par;
+		res.send("Par " + par);
+	});
 });
 
 function calculateScore(solution) {
 	return solution.replace(new RegExp("<.+>"),"x").length;
 }
 
+function determineVideoBucket(score, par) {
+	if (score > par * 1.3) return 6; 
+	if (score > par * 1.2) return 5; 
+	if (score > par * 1.1) return 4; 
+	if (score <= par * 1.1 && score >= par * 0.9) return 3;
+	if (score >= par * 0.8) return 2;
+	if (score >= par * 0.7) return 1;
+	return 0;
+}
+
 function notifyExerciseObservers(exerciseName) {
-	console.log('Attempting to notify observers...');
-	console.log(exerciseWsConnections);
 	if (!(exerciseName in exerciseWsConnections)) {
-		console.log('Exercise has no observers');
 		return;
 	}
 	for (var i = 0; i < exerciseWsConnections[exerciseName].length; i++) {
-		console.log('Notifying observer!');
-		exerciseWsConnections[exerciseName][i].send(JSON.stringify({ solutions: exerciseSolutions[exerciseName].sort(function(a, b) { return a.score - b.score })}));
+		exerciseWsConnections[exerciseName][i].send(JSON.stringify({ 
+				solutions: exerciseSolutions[exerciseName]
+					.sort(function(a, b) { return a.score - b.score })
+					.filter(function(s) { return !(exerciseName in deletedSolutions) || deletedSolutions[exerciseName].indexOf(s.id) == -1 })}));
 	}	
 }
 
-// Implement delete a post endpoint
-//app.delete('/exercises/:exerciseName/solutions/:solutionId'), function (req, res) {
-//}
+app.delete('/exercises/:exerciseName/solutions/:id', function (req, res) {
+	var exerciseName = req.params.exerciseName;
+	if (!(exerciseName in deletedSolutions)) {
+		deletedSolutions[exerciseName] = new Array();
+	}
+	deletedSolutions[exerciseName].push(parseInt(req.params.id));
+	notifyExerciseObservers(exerciseName);
+	res.sendStatus(200);
+});
 
 app.listen(3000);
 
-module.exports = { calculateScore: calculateScore };
+module.exports = { calculateScore: calculateScore, determineVideoBucket: determineVideoBucket };
