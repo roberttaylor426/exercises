@@ -1,0 +1,6 @@
+{
+	"exercise_name": "Collect list",
+	"exercise_start": "* item1\n* item2\n* item3\n* item4\n* item5",
+	"exercise_end": "item1,item2,item3,item4,item5",
+	"exercise_par": 18
+}

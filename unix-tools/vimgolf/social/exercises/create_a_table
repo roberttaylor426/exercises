@@ -1,0 +1,6 @@
+{
+	"exercise_name": "Create a table!",
+	"exercise_start": "Item name            Quantity\nEggs                        2\nCucumber                   20\nWatermelons                 1",
+	"exercise_end": "Item name   | Quantity\n----------------------\nEggs        |        2\nCucumber    |       20\nWatermelons |        1",
+	"exercise_par": 29
+}

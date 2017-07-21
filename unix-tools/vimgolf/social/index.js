@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 var exerciseSolutions = {};
 var deletedSolutions = {};
 var exerciseWsConnections = {};
+var exerciseKeystrokesVisible = {};
 
 var analogyVideos = [
 	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
@@ -29,8 +30,8 @@ var analogyVideos = [
 app.get('/exercises/:exerciseName', function (req, res) {
 	var exerciseName = req.params.exerciseName
 	fs.readFile('exercises/' + exerciseName, function(err, exercise) {
-		if (err) throw err;
-		res.render('index', JSON.parse(exercise.toString()));
+		if (err) res.sendStatus(404);
+		else res.render('index', JSON.parse(exercise.toString()));
 	});
 });
 
@@ -42,6 +43,7 @@ app.ws('/exercises/:exerciseName/solutions', function(ws, req) {
 	exerciseWsConnections[exerciseName].push(ws);
 	notifyExerciseObservers(exerciseName);
 	ws.on('close', function(code, reason) {
+		console.log('Closing ws connection');
 		for (var i = 0; i < exerciseWsConnections[exerciseName].length; i++) {
 			if (exerciseWsConnections[exerciseName][i] == ws) {
 				exerciseWsConnections[exerciseName].splice(i, 1);
@@ -86,11 +88,15 @@ function notifyExerciseObservers(exerciseName) {
 	if (!(exerciseName in exerciseWsConnections)) {
 		return;
 	}
+	if (!(exerciseName in exerciseKeystrokesVisible)) {
+		exerciseKeystrokesVisible[exerciseName] = false;
+	}
 	for (var i = 0; i < exerciseWsConnections[exerciseName].length; i++) {
 		exerciseWsConnections[exerciseName][i].send(JSON.stringify({ 
 				solutions: exerciseSolutions[exerciseName]
 					.sort(function(a, b) { return a.score - b.score })
-					.filter(function(s) { return !(exerciseName in deletedSolutions) || deletedSolutions[exerciseName].indexOf(s.id) == -1 })}));
+					.filter(function(s) { return !(exerciseName in deletedSolutions) || deletedSolutions[exerciseName].indexOf(s.id) == -1 }),
+				keystrokesVisible: exerciseKeystrokesVisible[exerciseName]}));
 	}	
 }
 
@@ -100,6 +106,14 @@ app.delete('/exercises/:exerciseName/solutions/:id', function (req, res) {
 		deletedSolutions[exerciseName] = new Array();
 	}
 	deletedSolutions[exerciseName].push(parseInt(req.params.id));
+	notifyExerciseObservers(exerciseName);
+	res.sendStatus(200);
+});
+
+app.put('/exercises/:exerciseName/keystrokesVisible/:visible', function (req, res) {
+	var exerciseName = req.params.exerciseName;
+	var visible = req.params.visible == 'true';
+	exerciseKeystrokesVisible[exerciseName] = visible;
 	notifyExerciseObservers(exerciseName);
 	res.sendStatus(200);
 });

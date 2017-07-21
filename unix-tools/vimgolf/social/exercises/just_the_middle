@@ -1,0 +1,6 @@
+{
+	"exercise_name": "Just the middle",
+	"exercise_start": "Leave only the\nnumbered lines.\nLINE 1\nLINE 2\nLINE 3\nThat's all.\nThank you\nvery much.",
+	"exercise_end": "LINE 1\nLINE 2\nLINE 2",
+	"exercise_par": 10
+}

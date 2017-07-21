@@ -26,13 +26,16 @@
 </html>
 <script>
 	var websocket = new WebSocket('ws://' + window.location.host + window.location.pathname + '/solutions');
-	console.log('ws://' + window.location.host + window.location.pathname + '/solutions');
 	websocket.onmessage = function(event) {
 		console.log(event.data);
 		renderSolutions(JSON.parse(event.data));
 	}
 	function renderSolutions(data) {
-		$.get('/solutions-template.hbs', function (source) {
+		var hbsTemplate = '/solutions-template.hbs';
+		if (!data.keystrokesVisible) {
+			hbsTemplate = '/solutions-template-keystrokes-hidden.hbs';
+		}
+		$.get(hbsTemplate, function (source) {
 			var template = Handlebars.compile(source);
 			var result = template(data);
 			$("#solutions-content-placeholder").html(result);

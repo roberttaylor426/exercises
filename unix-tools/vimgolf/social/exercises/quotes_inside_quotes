@@ -1,0 +1,6 @@
+{
+	"exercise_name": "Quotes inside quotes",
+	"exercise_start": "This string contains a 'quoted' word.\nThis string contains 'two' quoted 'words.'\nThis 'string doesn't make things easy.'",
+	"exercise_end": "This string contains a \"quoted\" word.\nThis string contains \"two\" quoted \"words.\"\nThis \"string doesn't make things easy.\"",
+	"exercise_par": 19
+}

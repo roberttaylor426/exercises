@@ -1,0 +1,6 @@
+{
+	"exercise_name": "From A to B!",
+	"exercise_start": "A.a.A.A.A\nA.A.a.A.A\nA.A.A.a.A",
+	"exercise_end": "BBBbB\nBBbBB\nBbBBB",
+	"exercise_par": 24
+}

@@ -1,6 +1,6 @@
 {
 	"exercise_name": "I forgot my quotes!",
-	"exercise_start": "blah",
-	"exercise_end": "blah blah blah",
-	"exercise_par": 4
+	"exercise_start": "foo = a\n      ab\n      abc",
+	"exercise_end": "foo = \"a\"\n      \"ab\"\n      \"abc\"",
+	"exercise_par": 19
 }

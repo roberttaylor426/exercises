@@ -1,0 +1,6 @@
+{
+	"exercise_name": "From arg to object",
+	"exercise_start": "organize(cupboard, 3, 2);\nprioritize(bureau, 8, 7);\nrealize(bannister, 4, 4);\nmoralize(railing, 3, 9);",
+	"exercise_end": "cupboard.organize(3, 2);\nbureau.prioritize(8, 7);\nbannister.realize(4, 4);\nrailing.moralize(3, 9);",
+	"exercise_par": 23
+}

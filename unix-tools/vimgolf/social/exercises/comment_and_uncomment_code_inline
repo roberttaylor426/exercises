@@ -1,0 +1,6 @@
+{
+	"exercise_name": "Comment and uncomment code",
+	"exercise_start": "These first three lines should\nbe commented out with C-style\ninline comments.\n\n// These three lines should have\n// the C-style inline comment\n// characters removed.",
+	"exercise_end": "// These first three lines should\n// be commented out with C-style\n// inline comments.\n\nThese three lines should have\nthe C-style inline comment\ncharacters removed.",
+	"exercise_par": 13
+}
