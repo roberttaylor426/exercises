@@ -18,13 +18,13 @@ var exerciseWsConnections = {};
 var exerciseKeystrokesVisible = {};
 
 var analogyVideos = [
-	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
-	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
-	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
-	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
-	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
-	["https://www.youtube.com/watch?v=GA2-DEEkU9M"],
-	["https://www.youtube.com/watch?v=GA2-DEEkU9M"]
+	["https://www.youtube.com/watch?v=GA2-DEEkU9M","https://www.youtube.com/watch?v=rDWRyU5yFxU","https://youtu.be/0ZcpbsoeDZ0?t=73"],
+	["https://youtu.be/6JdSgDzi1XU","https://www.youtube.com/watch?v=z70XlpjnEb8","https://www.youtube.com/watch?v=V6m5ZQke4mw"],
+	["https://youtu.be/AzzpQ5EhPck?t=33","https://youtu.be/PDmhGVP41h4","https://www.youtube.com/watch?v=HzZnAIZlEnE"],
+	["https://youtu.be/GA2-DEEkU9M?t=15","https://youtu.be/dviHVZj42U8","https://youtu.be/bO-ARrx6eRE","https://youtu.be/sTqKU1qCjDg","https://youtu.be/zaFPhlVOJ48","https://www.youtube.com/watch?v=kpB1nHSB1HM","https://www.youtube.com/watch?v=LBr7Pc-Wuzo"],
+	["https://www.youtube.com/watch?v=CHHGSeUf-30"],
+	["https://www.youtube.com/watch?v=bhju0mBRhH8","https://www.youtube.com/watch?v=sCbmxMmo1QM","https://www.youtube.com/watch?v=MK_ifMawOk0","https://www.youtube.com/watch?v=ABVx7jNeI8w","https://www.youtube.com/watch?v=CtQmJf50LGE","https://www.youtube.com/watch?v=t9O5X03Nygc"],
+	["https://www.youtube.com/watch?v=YefULut6YrA","https://www.youtube.com/watch?v=NzWN_1RMuAQ","https://www.youtube.com/watch?v=bJe8MseGn3M","https://youtu.be/5_UVgmPDMRY?t=24","https://www.youtube.com/watch?v=4viMgaWeHXI"]
 ];
 
 app.get('/exercises/:exerciseName', function (req, res) {
