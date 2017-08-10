@@ -9,6 +9,7 @@
 
 1. Recall the last argument from the previous command.
 2. Recall the 2nd argument from the previous command.
+3. Create 10 dirs, 1 to 10 in a single command.
 
 # find
 
@@ -16,6 +17,10 @@
 2. Find all files within a project modified in the last 24 hours.
 
 # grep
+
+# jq
+
+1. Download some json and pretty print it on the console.
 
 # sort
 
@@ -27,6 +32,7 @@
 
 1. Create an encrypted tunnel onto a machine.
 2. Create a reverse encrypted tunnel from a remote machine onto a local machine.
+3. Start a process on a remote server and detach from it so that when the session is closed the process continues to run.
 
 # vim
 
