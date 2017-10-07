@@ -18,9 +18,16 @@
 
 # grep
 
+1. Find results for all files in a folder.
+2. Show results including context before, after and around.
+
 # jq
 
 1. Download some json and pretty print it on the console.
+
+# sed
+
+1. Replace/remove content in a file.
 
 # sort
 
@@ -44,3 +51,4 @@
 # xargs
 
 1. Invoke a command using a substitution.
+2. Invoke a command in parallel.
