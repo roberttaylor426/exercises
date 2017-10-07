@@ -50,7 +50,15 @@
 3. Jump to a character on a line. Jump to the next matching char. (Hint: page 7).
 4. Add to a number on a line. (Hint: page 20).
 
+# uniq
+
+1. Sort and then count the number of occurrences of unique lines.
+
 # xargs
 
 1. Invoke a command using a substitution.
 2. Invoke a command in parallel.
+
+# Involved exercises:
+
+1. Take a log file, strip out unwanted content, count the number of occurrences of lines of interest.
