@@ -41,6 +41,8 @@
 2. Create a reverse encrypted tunnel from a remote machine onto a local machine.
 3. Start a process on a remote server and detach from it so that when the session is closed the process continues to run.
 
+# tee
+
 # vim
 
 1. Goto to the 10th line in a file (using both Ex commands and Normal mode).
