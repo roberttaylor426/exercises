@@ -41,6 +41,8 @@
 2. Create a reverse encrypted tunnel from a remote machine onto a local machine.
 3. Start a process on a remote server and detach from it so that when the session is closed the process continues to run.
 
+# systemd
+
 # tee
 
 # vim
